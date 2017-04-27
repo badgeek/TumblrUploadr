@@ -64,14 +64,14 @@ def main():
     )
 
   parser.add_argument(
-    '-tumblr_tags',
+    'tumblr_tags',
     metavar='Tags',
 	default= '',
     help='separated by space')
 
 
   parser.add_argument(
-    '-tumblr_desc',
+    'tumblr_desc',
     metavar='Description',
 	default= '',
     help='Enter Description')
@@ -85,6 +85,13 @@ def main():
     )
 
 
+  parser.add_argument(
+    'tumblr_image_quality',
+    metavar='Image Quality',
+    default='100',
+	choices= ['100', '90', '80', '70', '60']
+    )
+
 
 
   args = parser.parse_args()
@@ -96,23 +103,24 @@ def main():
   tumblr_blog = args.tumblr_blog
   tumblr_state = args.tumblr_post_status
   tumblr_resize = args.tumblr_resize_width
-
+  
+ 
   tumblr_photos_resized = []
   tumblr_photos_tobedeleted = []
-
+  tumblr_photos_quality = int(args.tumblr_image_quality)
    
   if len(tumblr_photos) > 0:
     print "Tumblr uploader. will upload " + str(len(tumblr_photos)) + " photos"
     if tumblr_resize != 'none':
       for photo_resize_file in tumblr_photos:
-        resized_image_filename = photo_resize_file + ".resized"
+        resized_image_filename = photo_resize_file + ".resized.jpeg"
         fd_img = open(photo_resize_file, 'r')
         img = Image.open(fd_img)
         print "---------"
         print "analyze " + photo_resize_file + " width: " + str(img.width) + " height:" + str(img.height)
         if img.width > int(tumblr_resize):
           img = resizeimage.resize_width(img, int(tumblr_resize))
-          img.save(resized_image_filename, img.format)          
+          img.save(resized_image_filename, "JPEG", quality=tumblr_photos_quality)          
           tumblr_photos_resized.append(resized_image_filename)
           tumblr_photos_tobedeleted.append(resized_image_filename)
           print "resized file to " + resized_image_filename 
