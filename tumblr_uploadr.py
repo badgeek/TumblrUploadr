@@ -64,14 +64,14 @@ def main():
     )
 
   parser.add_argument(
-    'tumblr_tags',
+    '-tumblr_tags',
     metavar='Tags',
 	default= '',
     help='separated by space')
 
 
   parser.add_argument(
-    'tumblr_desc',
+    '-tumblr_desc',
     metavar='Description',
 	default= '',
     help='Enter Description')
@@ -103,8 +103,13 @@ def main():
   tumblr_blog = args.tumblr_blog
   tumblr_state = args.tumblr_post_status
   tumblr_resize = args.tumblr_resize_width
-  
- 
+
+  print len(tumblr_desc.strip())
+  if(len(tumblr_tags) == 1 and tumblr_tags[0] == ''):
+    tumblr_tags = [" "]
+  if( len(tumblr_desc.strip()) == 0):
+    tumblr_desc = " "
+   
   tumblr_photos_resized = []
   tumblr_photos_tobedeleted = []
   tumblr_photos_quality = int(args.tumblr_image_quality)
