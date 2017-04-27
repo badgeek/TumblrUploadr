@@ -27,7 +27,7 @@ def asciiart():
   print(" ._.--''     ._,,, _..'  .;.'");
   print("  (,_....----'''     (,..--''");
 
-@Gooey(program_name="TumblrUploadr")
+@Gooey(program_name="TumblrUploadr",  default_size=(610, 600))
 def main():
   parser = GooeyParser(description='Tumblr Uploadr for Bondut.')
 
